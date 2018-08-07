@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<link href="%PUBLIC_URL%/assets/css/fontawesome-all.css" type='text/css' media='all' />
+	<link rel='stylesheet' href='%PUBLIC_URL%/assets/css/fmru.css?ver=4.9.6' type='text/css' media='all' />
+	<link rel='stylesheet' href='http://fest3.metaversitet.ru/wp-includes/css/dashicons.min.css?ver=4.9.6' type='text/css' media='all' />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-likes/dist/social-likes_birman.css">
+	
+	<script src="%PUBLIC_URL%/assets/js/jquery-1.10.2.min.js"></script>
+	<script src="%PUBLIC_URL%/assets/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/social-likes/dist/social-likes.min.js"></script>
+	<script>
+		var url='http://fest3.metaversitet.ru';
+	</script>
+    <title>Fest</title>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id='main'></div>
+	<div class="">
+			<audio id="player" ></audio>
+			<!--div class="btn btn-primary" id="start_mic">Start mic</div>
+			<div class="btn btn-primary" id="stop_mic" >Stop mic</div-->
+			<script>
+				var player = document.getElementById('player');
+				var start_mic = document.getElementById('start_mic');
+				var stop_mic = document.getElementById('stop_mic');
+				window.mayMic = false;
+				window.micLength = 0;
+				window.micMax = 2024000;
+				window.handleSuccess = function(stream) 
+				{
+				
+					console.log(window.mayMic);
+					if (!window.mayMic)	return;
+					var context = new AudioContext() || new webkitAudioContext();
+					var source = context.createMediaStreamSource(stream);
+					var processor = context.createScriptProcessor(1024, 1, 1);
+					source.connect(processor);
+					processor.connect(context.destination);
+					processor.onaudioprocess = function(e) 
+					{
+					  // Do something with the data, i.e Convert this to WAV
+					  window.micLength += e.inputBuffer.length;
+					  //console.log(e.inputBuffer.length);
+					};
+				};
+				navigator.mediaDevices
+					.getUserMedia({ audio: true, video: false })
+						.then((elem) => { 
+							window.mstream = elem;
+							//window.handleSuccess; 
+						} );
+			</script>
+	</div>
+  </body>
+</html>
