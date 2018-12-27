@@ -75,6 +75,7 @@ export default class FmRUMemberPage extends Component
 		{
 			return <FmRUGanreIcon ganre={ganre} key={ganre.id} />
 		});
+		const raiting_vis = " list-group-item " + " hidden ";
 		const ganres = mdata.member.ganres.map((ganre, index) =>  <span className='ganre_title' style={{backgroundColor: ganre.color}} key={"mg_"+ganre.id}>{ganre.name}</span> );
 		return <Fragment>
 			<section id="card">
@@ -142,7 +143,7 @@ export default class FmRUMemberPage extends Component
 												</div>
 											</div>
 										</li>
-										<li className="list-group-item">
+										<li className={raiting_vis}>
 											<div className="row margin0">
 												<div className="col-md-7 col-sm-7 critery_cell2">
 													<Voc text={ "Raiting:"} />

@@ -47,6 +47,7 @@ export default class TextArea extends Component
 	}
 	audioJungle()
 	{
+		return "";
 		const classes = this.state.is_mic ? ["mta", "open"] : ["mta"];
 		const mclasses = this.state.is_mic ? ["fmRU_button xl mcph hint hint--top"] : ["fmRU_button xl mcph hint hint--left"];
 		const st = window.mayMic ? {color:"red"} : {};

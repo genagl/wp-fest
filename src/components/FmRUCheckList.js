@@ -21,6 +21,7 @@ export default class FmRUCheckList extends Component
 				index={i} 
 				member_id={member_id} 
 				key={data.id +"_"+ i}
+				old={ parseInt(data.rating, 10) }
 			/>;
 		}
 		return (

@@ -14,7 +14,7 @@ export function _fetch( code, args, log, psw, data )
 	}
 	else if(log && psw)
 	{
-		const xxx = base64_encode( log+':'+psw ); // Z2VuYWdsOnphcTEyd3M=
+		const xxx = base64_encode( log+':'+psw );
 		headers.Authorization = 'Basic ' + xxx; 
 	}
 	return fetch(get_url() + '/wp-json/get_main/' + code,

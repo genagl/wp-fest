@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import Foo from '../Foo';
+import Vocabulary from './Vocabulary';
 
 export default class FmRUCheck extends Component
 {
@@ -33,11 +34,13 @@ export default class FmRUCheck extends Component
 			<label htmlFor={ chid }  data-hint={index===0 ? "-" : index}></label>
 		</span>);
 	}
-	onItemClick= (evt)=>{
-		const {id, member_id} = this.props;
+	onItemClick = (evt) =>
+	{
+		var oz = evt.currentTarget.value;
+		const {id, member_id, old} = this.props;
 		this.setState({
-			val: evt.currentTarget.value
+			val: oz
 		});
-		Foo.app.onOzenka("ozenka",{mid:member_id, crid:id, c:evt.currentTarget.value, d:"", is_comment:Foo.is_comment});
+		Foo.app.onOzenka("ozenka",{mid:member_id, crid:id, old_c:old, c:oz, d:"", is_comment:Foo.is_comment});
 	}
 }

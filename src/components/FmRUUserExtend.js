@@ -2,6 +2,8 @@ import React, {Component, Fragment} from 'react';
 import {PieChart, LineChart } from 'react-easy-chart'; //https://github.com/rma-consulting/react-easy-chart
 import _BarChart from './BarChart'
 import $ from "jquery";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 import Voc from './Voc';
 import Vocabulary from './Vocabulary';
@@ -606,56 +608,14 @@ export default class FmRUUserExtend extends Component
 			
 		</Fragment>);
 	}
-	baseUserCheck(data, slide_id=3)
+	baseUserCheck(data, slide_id = 3) 
 	{
+		//console.log(data.fmru_evlbl_roles); //"Project_member"
+		let evlbl_roles = $.isArray( data.fmru_evlbl_roles ) ? data.fmru_evlbl_roles : [];
 		const is_admin = data.roles.in_array("administrator");
-		const memberSelects = this.state.members.map((elem, index)=>{
-			return <div className="col-lg-6 col-md-12  col-sm-12 col-12" key={"newGnrPr__" +index}>				
-					<UserSelect 
-						users={data.users} 
-						onChoose={this.set_member} 
-						frole={"Project_member"}
-						id={"member_" + index}
-						key={"member_"  + index}
-						select={elem}
-						i={index}
-						is_locked= { this.state.members[index] == data.user_id ? 1: 0 }
-						is_blocked={ 
-							this.props.leader == data.user_id
-							 || this.state.members[index] == data.user_id 
-								|| is_admin
-							? 1: 0 
-						}
-					/>
-					<div className="spacer-10" />
-				</div>;
-		});
-		const leaderBlock =  (
-			<UserSelect 
-				users={data.users} 
-				onChoose={this.set_author} 
-				frole={"Project_author"}
-				id={"leader_id"}
-				key={"leader_id"}
-				select={this.state.leader}
-				user_id={data.user_id}
-				is_locked= { this.state.leader == data.user_id  ? 1: 0 }
-				is_blocked={ 
-					this.props.leader == data.user_id 
-					 || this.state.tutor == data.user_id 
-						|| is_admin 
-					? 1: 0 
-				}
-			/>);
-		return (
+		const TutorSelect = evlbl_roles.in_array("Tutor")	? 
 		<Fragment>
-			<div className='display-4'>
-				<Voc text={"Team"}/>
-			</div>
-			<div className="spacer-10"/>
-			<div className='w-100'>				
-				
-				<div className="col-lg-2 col-md-4 col-sm-12 col-12 up_title">
+			<div className="col-lg-2 col-md-4 col-sm-12 col-12 up_title">
 					<Voc text={"Tutor"} />
 				</div>
 				<div className="col-lg-10 col-md-8 col-sm-12 col-12 ">				
@@ -682,6 +642,65 @@ export default class FmRUUserExtend extends Component
 					<div className="spacer-15" />
 				</div>	
 				<div className="col-12"/>
+			</ Fragment>
+			: "";
+		const memberSelects = this.state.members.map((elem, index)=>{
+			return  evlbl_roles.in_array("Project_member")  ? 
+			<Fragment>
+				<div className="col-lg-2 col-md-4 col-sm-12 col-12 up_title">
+					<Voc text={"Project Members"} />
+				</div>
+				<div className="col-lg-10 col-md-8 col-sm-12 col-12 ">		
+					<div className="row">
+						<div className="col-lg-6 col-md-12  col-sm-12 col-12" key={"newGnrPr__" +index}>				
+							<UserSelect 
+								users={data.users} 
+								onChoose={this.set_member} 
+								frole={"Project_member"}
+								id={"member_" + index}
+								key={"member_"  + index}
+								select={elem}
+								i={index}
+								is_locked= { this.state.members[index] == data.user_id ? 1: 0 }
+								is_blocked={ 
+									this.props.leader == data.user_id
+									 || this.state.members[index] == data.user_id 
+										|| is_admin
+									? 1: 0 
+								}
+							/>
+							<div className="spacer-10" />
+						</div>								
+					</div>
+				</div>
+			</Fragment> : "";
+		});
+		const leaderBlock =  (
+			<UserSelect 
+				users={data.users} 
+				onChoose={this.set_author} 
+				frole={"Project_author"}
+				id={"leader_id"}
+				key={"leader_id"}
+				select={this.state.leader}
+				user_id={data.user_id}
+				is_locked= { this.state.leader == data.user_id  ? 1: 0 }
+				is_blocked={ 
+					this.props.leader == data.user_id 
+					 || this.state.tutor == data.user_id 
+						|| is_admin 
+					? 1: 0 
+				}
+			/>);
+		return (
+		<Fragment>
+			<div className='display-4'>
+				<Voc text={"Team"}/>
+			</div>
+			<div className="spacer-10"/>
+			<div className='w-100'>				
+				{TutorSelect}
+				
 				<div className="col-lg-2 col-md-4  col-sm-12 col-12 up_title">
 					<Voc text={"Project Author"} />
 				</div>
@@ -694,14 +713,8 @@ export default class FmRUUserExtend extends Component
 					<div className="spacer-15" />
 				</div>	
 				<div className="col-12"/>
-				<div className="col-lg-2 col-md-4 col-sm-12 col-12 up_title">
-					<Voc text={"Project Members"} />
-				</div>
-				<div className="col-lg-10 col-md-8 col-sm-12 col-12 ">		
-					<div className="row">
-						{memberSelects}				
-					</div>
-				</div>
+				{memberSelects}		
+				
 				<div className="spacer-15" />
 				<div className="col-12 text-center">
 					<div data-target="#carouselExampleIndicators" data-slide-to={slide_id} className="btn btn-primary ">
@@ -799,8 +812,9 @@ export default class FmRUUserExtend extends Component
 	
 	
 	
-	myStatus()
+	myStatus(data)
 	{
+		console.log(data.fmru_evlbl_roles); //"Project_member"
 		const { roles, reqRoles } = this.props.data;
 		const MyRoles = FmRUUser.roles.map( ( elem, num ) => {
 			const cl = roles.in_array(elem) ? 
@@ -818,7 +832,7 @@ export default class FmRUUserExtend extends Component
 				<Fragment>
 					<span><Voc text={"For request"} /></span> <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512' fill='#06474c' width='32' height='33'><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm0-224c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96zm272 192c-79.6 0-144 64.4-144 144s64.4 144 144 144 144-64.4 144-144-64.4-144-144-144zm0 256c-61.8 0-112-50.2-112-112s50.2-112 112-112 112 50.2 112 112-50.2 112-112 112zm-135.8 0H48c-8.8 0-16-7.2-16-16v-41.6C32 365.9 77.9 320 134.4 320c19.6 0 39.1 16 89.6 16 50.4 0 70-16 89.6-16 4.4 0 8.6.8 12.9 1.3 2.9-10.7 6.9-21 11.7-30.8-8-1.5-16.1-2.5-24.5-2.5-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h346.9c-12.9-9.1-24.7-19.8-34.7-32zm190.1-128H512v-54.3c0-5.3-4.4-9.7-9.7-9.7h-12.6c-5.3 0-9.7 4.4-9.7 9.7v76.6c0 5.3 4.4 9.7 9.7 9.7h60.6c5.3 0 9.7-4.4 9.7-9.7v-12.6c0-5.3-4.4-9.7-9.7-9.7z"/></svg>
 				</Fragment>: icon;
-			return (
+			return  data.fmru_evlbl_roles.in_array(elem) || elem === "administrator" ? 
 				<div key={"role_" + num} className="col-md-12 col-12" onClick={this.getRoleReq} data-role={elem}>
 					<div className={cl}>
 						<Voc text={ elem } />
@@ -828,7 +842,7 @@ export default class FmRUUserExtend extends Component
 					</div>
 					<div className="spacer-5"/>
 				</div>
-			);
+			: "";
 		});
 		return (	
 			<Fragment>
@@ -1081,11 +1095,12 @@ export default class FmRUUserExtend extends Component
 		data.vk_url 		= this.state.vk_url;
 		data.instagramm_url	= this.state.instagramm_url;
 		data.youtube_url	= this.state.youtube_url;
-		console.log(data);
 		Foo.app.fetch(
 			"update_my_project", //"test", 
 			data
 		);
+		$("#carouselExampleIndicators").carousel(0);
+		//$("#carouselExampleIndicators").carousel('dispose');
 	}
 	getUserName = evt => 
 	{

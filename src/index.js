@@ -18,7 +18,7 @@ export function get_status()
 export default function get_url() 
 {
 	//console.log("%c "+window.location.protocol + "//" + window.location.hostname, "color:red;'font-size:2em;");
-	return  get_status() === "local" ? 'http://wp-fest.genagl.ru' : window.location.protocol + "//" + window.location.hostname; // 'http://fest3.metaversitet.ru'
+	return  get_status() === "local" ? 'http://novgu.metaversitet.ru' : window.location.protocol + "//" + window.location.hostname; 
 } 
 export function get_auth()
 {

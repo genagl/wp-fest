@@ -5845,6 +5845,27 @@ img.fmru_logo
     width: 50px!important;
     padding: 15px!important;
 }
+.reload-btn
+{
+	font-size:16px;
+	padding:5px 10px;
+	cursor:pointer;
+	opacity:0.8;
+	position:absolute;
+	top:0;
+	right:0;
+}
+.reload-btn:hover
+{
+	opacity:1;
+}
+.reload-btn:active
+{
+	background:#111;
+	color:#EEE;
+}
+
+
 @media only screen and (min-width: 576px)
 {
 	.container 

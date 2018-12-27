@@ -65,6 +65,6 @@ function rootReducer(state=_state, action=_action)
 			return state;
 	}
 }
-//var store = createStore(rootReducer, applyMiddleware(logger));
-var store = createStore(rootReducer);
+var store = get_status() == "local" ? createStore(rootReducer, applyMiddleware(logger)) : createStore( rootReducer );
+//var store = createStore(rootReducer);
 export default store;

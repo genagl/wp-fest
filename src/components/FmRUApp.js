@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import * as actions from "../actions/actions";
 import Foo from "../Foo";
 
+import DrawingState from "./DrawingState.js";
 import FmRUPhase from './FmRUPhase';
 import FmRUHead from './FmRUHead';
 import FmRUUser from './FmRUUser';
@@ -19,6 +20,7 @@ import Aalert from './Aalert';
 import './bootstrap.min.css';
 import "react-bootstrap";
 import {getCookie, setCookie, deleteCookie,voc} from "./FmRUAppExt";
+
 
 import icon1 from "../img/test.svg";
 import icon2 from "../img/kabuki.svg";
@@ -152,7 +154,10 @@ class FmRUApp extends Component
 				//this.state.psw = "";
 				//this.fetch( "invalid_username", 0);
 				cont = this.get404("invalide_username", "invalid username");
-				break;				
+				break;		
+			case "newProjectDoc":
+				cont = this.newProjectDoc();
+				break;
 			case "rest_no_route":
 				cont = this.get404(this.props.data.data.status, this.props.data.message);
 				break;				
@@ -190,6 +195,39 @@ class FmRUApp extends Component
 		);
 				
 	}
+	newProjectDoc()
+	{
+		return (
+			<div className='container colored not'>
+				< FmRUHead 
+					p={this.props.data}  
+					prnt={this}
+					page_type = "page" 
+					onItemClick = {this.onMemberClick.bind(this)}					
+					login = {this.login.bind(this)}
+					register={this.onRegister}
+					onLogout = {this.onLogout}
+					onUser = {this.onUser}
+				/>		
+				
+					<div className="row justify-content-center">
+						<div className="col-lg-6 col-md-8 col-sm-12">
+							<DrawingState
+								width = {600}
+								height = {200}
+								id="Drawing"
+							/>	
+							<div 
+								className="btn btn-link"
+							>
+								{ Vocabulary.getText("send") }
+							</div>
+						</div>
+					</div>
+			</div>
+		);
+				
+	}
 	page()
 	{
 		const posts		= this.props.data.posts.map(elem => (
@@ -218,6 +256,17 @@ class FmRUApp extends Component
 				<div className="spacer-30"/>
 			</div>
 		))
+		const crMyPrForm = this.props.data.is_register ? "--" : <div className="row justify-content-center">
+			<div className="col-lg-6 col-md-8 col-sm-12">
+				<div className='display-3 text-center'>
+					{this.props.data.title}
+				</div>
+				<div className="spacer-30" />
+				{FmRUPhase.getText()}
+				<div className="spacer-10" />
+				{this.props.data.content}
+			</div>
+		</div>
 		const my_projects = this.props.data.my_members.length ? 
 		<Fragment>
 			<section style={{background:"rgba(0,0,0,0.2)"}}>	
@@ -256,9 +305,10 @@ class FmRUApp extends Component
 					onUser = {this.onUser}
 				/>		
 				<section>
-					<div className="carousel-indicators">				
+					<div className="carousel-indicators">	
 						<div 
 							className="indicator classic"
+							id='indicator_about'
 							data-fmru_type="page"
 							data-args="0"
 							onClick={this.onMemberClick}		
@@ -278,6 +328,7 @@ class FmRUApp extends Component
 						/>
 						<div 
 							className="indicator classic"
+							id='indicator_members'
 							data-fmru_type="list"
 							data-args="0"
 							onClick={this.onMemberClick}							
@@ -288,19 +339,22 @@ class FmRUApp extends Component
 							</div>
 						</div>
 					</div>	
+					{crMyPrForm}
 					<div className="row justify-content-center">
-						<div className="col-lg-6 col-md-8 col-sm-12">
-							<div className='display-3 text-center'>
-								{this.props.data.title}
-							</div>
+						<div className="col-lg-6 col-md-8 col-sm-12 text-center">
 							<div className="spacer-30" />
-							{FmRUPhase.getText()}
-							<div className="spacer-10" />
-							{this.props.data.content}
+							<div 
+								className='btn btn-primary newProjectDoc'
+								data-fmru_type="newProjectDoc" 
+								data-args="0" 
+								onClick={ this.onMemberClick }
+							>
+								{Vocabulary.getText("create new Project")}
+							</div>
 						</div>
 					</div>
 				</section>
-			</div>
+			</div>		
 			{my_projects}
 			<div className='container colored'>
 				<section>
@@ -334,7 +388,8 @@ class FmRUApp extends Component
 	{	
 		const countChooser = this.props.data.count_chooser ? 
 			<div 
-				className="indicator classic"												
+				className="indicator classic"
+				id='indicator_count'
 				data-toggle='modal'
 				data-target='#countModal' 
 			>
@@ -350,6 +405,18 @@ class FmRUApp extends Component
 				dangerouslySetInnerHTML={{ __html : Vocabulary.getText(FmRUUser.bySlug(elem)[0].descr) }} 
 			/>
 		);
+		const about = this.props.data.enabled_rules ? <div 
+			className="indicator classic"	
+			id="indicator_about"	
+			data-fmru_type="page"
+			data-args="0"
+			onClick={this.onMemberClick}
+		>
+			<div className="n1"><Voc text={"About"} /></div>
+			<div className="iconnn">
+				<img src={ this.props.data.logo } alt="" />
+			</div>
+		</div> : "" ;
 		if(user_descr.length === 0)
 			user_descr.push( 
 				<div  
@@ -395,17 +462,7 @@ class FmRUApp extends Component
 				/>		
 				<section>					
 					<div className="carousel-indicators">					
-						<div 
-							className="indicator classic"	
-							data-fmru_type="page"
-							data-args="0"
-							onClick={this.onMemberClick}
-						>
-							<div className="n1"><Voc text={"About"} /></div>
-							<div className="iconnn">
-								<img src={ this.props.data.logo } alt="" />
-							</div>
-						</div>
+					{about}
 						<FmRULoginForm 
 							prnt={ this }
 							user = { this.props.data } 
@@ -416,6 +473,7 @@ class FmRUApp extends Component
 						/>
 						<div 
 							className="indicator classic"													
+							id="indicator_ganres"													
 							data-toggle='modal'
 							data-target='#filterModal' 
 						>
@@ -477,7 +535,18 @@ class FmRUApp extends Component
 	}
 	fmru_player()
 	{
-		
+		const about = this.props.data.enabled_rules ? <div 
+			className="indicator classic"	
+			id="indicator_about"	
+			data-fmru_type="page"
+			data-args="0"
+			onClick={this.onMemberClick}
+		>
+			<div className="n1"><Voc text={"About"} /></div>
+			<div className="iconnn">
+				<img src={ this.props.data.logo } alt="" />
+			</div>
+		</div> : "" ;
 		return (
 			<div className='container colored'>				
 				< FmRUHead 
@@ -492,17 +561,7 @@ class FmRUApp extends Component
 				/>		
 				<section>
 					<div className="carousel-indicators">				
-						<div 
-							className="indicator classic"	
-							data-fmru_type="page"
-							data-args="0"
-							onClick={this.onMemberClick}
-						>
-							<div className="n1"><Voc text={"About"} /></div>
-							<div className="iconnn">
-								<img src={ this.props.data.logo } alt="" />
-							</div>
-						</div>	
+						{about}
 						<FmRULoginForm 
 							prnt={ this }
 							user = { this.props.data } 
@@ -514,6 +573,7 @@ class FmRUApp extends Component
 						<Link to="/">
 							<div 
 								className="indicator classic"
+								id="indicator_to_list"
 								data-fmru_type="list" 
 								data-args="0"
 								onClick = { this.onMemberClick.bind(this) }
