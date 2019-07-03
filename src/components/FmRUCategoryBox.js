@@ -14,7 +14,7 @@ export default class FmRUCategoryBox extends Component
 	}
 	render() 
 	{ 
-		const { data, onItemClick, member_id } = this.props;
+		const { data, onItemClick, member_id, max_raiting } = this.props;
 		const style = {backgroundColor: data.color, color:"#f8f9fa"}; 
 		return (
 			<div className="col-md-12" key={ data.id}>
@@ -30,6 +30,7 @@ export default class FmRUCategoryBox extends Component
 					<div className="row">
 						<FmRUCriteryBoxList 
 							data={ data.criteries } 
+							max_raiting={ max_raiting } 
 							descrs={data.d}
 							id={ data.id } 
 							color={data.color}

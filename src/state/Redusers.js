@@ -10,10 +10,7 @@ const _state = {
 	code:"none",
 	args:{},
 }
-/*
-FLUX standart action
-{type:STRING, payload:...}
-*/
+//window.fmru_member = -1;
 const _action = {
 	type: "NONE",
 	data:{members:[]},
@@ -36,12 +33,22 @@ function rootReducer(state=_state, action=_action)
 			var l = lass ? lass.split("&") : [] ;
 			var log ="";
 			var psw = "";
+			if( window.fmru_member )
+			{
+				var page = "fmru_player";
+				var id = window.fmru_member;
+			}
+			else
+			{
+				var page = "page";
+				var id = 0;
+			}
 			if(l.length)
 			{
 				log = l[0];
 				psw = l[1];
 			}
-			_fetch( "page", 0, log, psw, {} )
+			_fetch( page, id, log, psw, {} )
 				.then( data => {
 					window.is_loader = false;
 					store.dispatch({ type: TYPES.LOAD_PAGE, data:data });

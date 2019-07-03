@@ -29,7 +29,7 @@ import icon4 from "../img/festLogo.svg";
 
 Vocabulary.init( voc );
 
-export const BLOG_API = 'http://fest3.metaversitet.ru'; //window.location.href;
+export const BLOG_API = 'http://wp-fest.genagl.ru'; //window.location.href;
 class FmRUApp extends Component
 {	
     constructor(props) 
@@ -60,14 +60,6 @@ class FmRUApp extends Component
 		this.loader = React.createRef();
 		
     }
-	componentWillReceiveProps (nextProps) 
-	{
-		//console.log("componentWillReceiveProps=" + this.state.code);		
-	}
-	componentWillUpdate  (nextProps) 
-	{
-		//console.log("---", this.state.code);
-	}
 	componentDidMount ()
 	{
 			Foo.app 		= this;
@@ -84,10 +76,6 @@ class FmRUApp extends Component
 					ref = {this.alert}
 				/>;
 	}
-	componentWillUnmount()
-	{
-		//clearInterval(this.timer);
-	}
 	componentDidUpdate()
 	{
 		if(this.props.data.prompt)
@@ -95,10 +83,6 @@ class FmRUApp extends Component
 			var data = this.props.data.prompt;
 			this.a_alert( typeof data === "string" ? {content:data} : data ); 
 		}
-		//if($(".container.colored:not(.not)").height() < $(window).height())
-		//	$(".container.colored:not(.not)").height($(window).height());
-		//else
-		//	$(".container.colored:not(.not)").css({height:"auto"});
 	}
 	render()
 	{ 	
@@ -230,10 +214,11 @@ class FmRUApp extends Component
 	}
 	page()
 	{
+		console.log( this.props.data );
 		const posts		= this.props.data.posts.map(elem => (
 			<div className="row" key={elem.id}>
 				<div className="col-12">
-					<div className="diary_post">
+					<div className="diary_post mt-2">
 						<div className="diary_title">
 							{elem.post_title}
 						</div>
@@ -256,15 +241,17 @@ class FmRUApp extends Component
 				<div className="spacer-30"/>
 			</div>
 		))
-		const crMyPrForm = this.props.data.is_register ? "--" : <div className="row justify-content-center">
-			<div className="col-lg-6 col-md-8 col-sm-12">
-				<div className='display-3 text-center'>
+		const crMyPrForm =<div className="row justify-content-center">
+			<div className="col-lg-6 col-md-8 col-sm-12 mt-5">
+				<div className='lead font-weight-bold text-center'>
 					{this.props.data.title}
 				</div>
 				<div className="spacer-30" />
 				{FmRUPhase.getText()}
 				<div className="spacer-10" />
-				{this.props.data.content}
+				<div 
+					dangerouslySetInnerHTML={{ __html : this.props.data.content}}
+				/>
 			</div>
 		</div>
 		const my_projects = this.props.data.my_members.length ? 
@@ -285,12 +272,12 @@ class FmRUApp extends Component
 					<div className="spacer-10"/>					
 					< FmRUMemberBox 
 						members={this.props.data.my_members} 
-						onItemClick = {this.onMemberClick.bind(this)} 
+						onItemClick = {this.onMemberClick } 
 						mtype = {"card"}
 					/>	
 				</div>
 			</section>
-		</Fragment> : "";
+		</Fragment> : null;
 		return (	
 		<Fragment>
 			<div className='container colored'>
@@ -298,8 +285,8 @@ class FmRUApp extends Component
 					p={this.props.data} 
 					prnt={this}
 					page_type = "page" 
-					onItemClick = {this.onMemberClick.bind(this)}					
-					login = {this.login.bind(this)}
+					onItemClick = {this.onMemberClick}					
+					login = {this.login}
 					register={this.onRegister}
 					onLogout = {this.onLogout}
 					onUser = {this.onUser}
@@ -340,19 +327,22 @@ class FmRUApp extends Component
 						</div>
 					</div>	
 					{crMyPrForm}
-					<div className="row justify-content-center">
-						<div className="col-lg-6 col-md-8 col-sm-12 text-center">
-							<div className="spacer-30" />
-							<div 
-								className='btn btn-primary newProjectDoc'
-								data-fmru_type="newProjectDoc" 
-								data-args="0" 
-								onClick={ this.onMemberClick }
-							>
-								{Vocabulary.getText("create new Project")}
+					{
+						 this.props.data.user_id < 1 ? null : 
+							<div className="row justify-content-center">
+								<div className="col-lg-6 col-md-8 col-sm-12 text-center">
+									<div className="spacer-30" />
+									<div 
+										className='btn btn-primary newProjectDoc'
+										data-fmru_type="newProjectDoc" 
+										data-args="0" 
+										onClick={ this.onMemberClick }
+									>
+										{Vocabulary.getText("create new Project")}
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
+					}
 				</section>
 			</div>		
 			{my_projects}
@@ -709,7 +699,7 @@ class FmRUApp extends Component
 	onUser = (evt)=> {
 		this.fetch("user", "");
 	}
-	login(obj)
+	login = obj =>
 	{
 		this.setState({
 			log: obj.log,

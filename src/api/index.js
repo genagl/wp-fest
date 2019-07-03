@@ -1,5 +1,5 @@
-import get_url from "../index"
-import {MD5, base64_encode, base64_decode} from "../components/FmRUAppExt"
+import get_url from "../index";
+import {base64_encode} from "../components/FmRUAppExt";
 
 export function _fetch( code, args, log, psw, data )
 {

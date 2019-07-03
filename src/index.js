@@ -7,6 +7,7 @@ import store from "./state/Redusers"
 import { Provider } from 'react-redux';
 import { Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
+import config from "./config.json";
 
 export function get_status()
 {
@@ -18,7 +19,7 @@ export function get_status()
 export default function get_url() 
 {
 	//console.log("%c "+window.location.protocol + "//" + window.location.hostname, "color:red;'font-size:2em;");
-	return  get_status() === "local" ? 'http://novgu.metaversitet.ru' : window.location.protocol + "//" + window.location.hostname; 
+	return  get_status() === "local" ? config.server_url : window.location.protocol + "//" + window.location.hostname; 
 } 
 export function get_auth()
 {

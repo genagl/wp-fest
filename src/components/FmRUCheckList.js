@@ -7,12 +7,12 @@ export default class FmRUCheckList extends Component
 {
 	render() 
 	{ 
-		const{ data, member_id} = this.props;
+		const{ data, member_id, max_raiting} = this.props;
 		const articleElements = [];
 		const classrs = ["fmRU_button hint hint--left"];
 		if(Foo.is_comment) 
 			classrs.push("hidden");
-		for(var i=0; i<4;i++)
+		for(var i=0; i< max_raiting + 1; i++)
 		{
 			articleElements[i] = <FmRUCheck 
 				id={data.id} 

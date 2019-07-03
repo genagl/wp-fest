@@ -10,7 +10,7 @@ export default class FmRUCriteryBox extends Component
 {
 	render() 
 	{
-		const { data } = this.props;
+		const { data, max_raiting } = this.props;
 		const style= {padding:0};
 		const descr = data && FmRUUser.is_role("Expert") && this.props.data.rating > 0 && ["1", "2"].in_array(FmRUPhase.phase) ? 
 		<div className="">
@@ -53,6 +53,7 @@ export default class FmRUCriteryBox extends Component
 				onItemClick={this.props.onItemClick} 
 				onEdit={this.onEdit} 
 				member_id={this.props.member_id}
+				max_raiting={this.props.max_raiting}
 			/>
 		)
 	}

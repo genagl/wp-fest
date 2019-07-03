@@ -13,7 +13,8 @@ export default class FmRUCriteryUniqList extends Component
 	}
 	render() 
 	{ 	
-		const {data, categories, onItemClick, member_id, is_expert, aut_criteries} = this.props;
+		const {data, categories, onItemClick, member_id, is_expert, aut_criteries, max_raiting} = this.props;
+		console.log( max_raiting );
 		const articleElements = data.map((article, index) =>
 		{     
 			return <FmRUCriteryBox 
@@ -21,6 +22,7 @@ export default class FmRUCriteryUniqList extends Component
 				onItemClick={onItemClick} 
 				key={"critery_"+article.id}
 				member_id={member_id}
+				max_raiting={ parseInt(max_raiting) }
 			/>
 		});
 		const choose_form = categories.map(elem => 

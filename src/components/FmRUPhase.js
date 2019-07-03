@@ -12,6 +12,7 @@ export default class FmRUPhase
 		switch(FmRUPhase.phase)
 		{
 			case "0":
+			case 0:
 				return <ul className="pagination justify-content-center">
 					<li className="page-item">
 						<a className="page-link">
@@ -20,6 +21,7 @@ export default class FmRUPhase
 					</li>
 				</ul>;
 			case "1":
+			case 1:
 				return <ul className="pagination justify-content-center">
 					<li className="page-item">
 						<a className="page-link">
@@ -28,6 +30,7 @@ export default class FmRUPhase
 					</li>
 				</ul>;
 			case "2":
+			case 2:
 				return <ul className="pagination justify-content-center">
 					<li className="page-item">
 						<a className="page-link">
@@ -36,6 +39,7 @@ export default class FmRUPhase
 					</li>
 				</ul>;
 			case "3":
+			case 3:
 				return <ul className="pagination justify-content-center">
 					<li className="page-item">
 						<a className="page-link">

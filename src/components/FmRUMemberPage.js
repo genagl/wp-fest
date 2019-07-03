@@ -18,8 +18,9 @@ export default class FmRUMemberPage extends Component
 	constructor(props)
 	{
 		super(props);
+		console.log( props );
 		this.state = {
-			contents_id : props.mdata.member.slide_id,
+			contents_id : props.mdata.status != 2 ? "1" : props.mdata.member.slide_id,
 			newPost : "",
 			newTitle : "",
 			new_post_private: false
@@ -36,6 +37,33 @@ export default class FmRUMemberPage extends Component
 	card()
 	{
 		const {mdata, onItemClick} = this.props;
+		
+		const articleElements = this.props.mdata.experts.map(( expert ) => expert.display_name );
+		const experts = articleElements.length> 0 ? (
+			<li className="list-group-item">
+				<div className="row margin0">
+					<div className="col-md-12 critery_cell2">
+						<Voc text={"Experts, who put raiting:"} />
+					</div>
+					<div className="col-md-12 critery_cell2">
+						<strong>{ articleElements.join(", ") }</strong>
+					</div>
+				</div>
+			</li> )  : "";
+		
+		if( mdata.status == 2 && mdata.is_expert )
+			return <div>
+				<div className="display-4 text-center font-weight-bold">
+					{mdata.member.title}
+				</div>
+				<div className="text-center">
+					<Voc text={"Experts, who put raiting:"} /> <strong>{ articleElements.join(", ") }</strong>
+				</div>
+				<div className="text-center">
+					<Voc text={"Valuations:"} /> <strong className="lead font-weight-bold">{mdata.rait}</strong>
+				</div>
+			</div>;
+			
 		let socials = [];
 		[	{i:"fab fa-facebook-f",	n:"fb_url"}, 
 			{i:"fab fa-vk",			n:"vk_url"}, 
@@ -58,19 +86,6 @@ export default class FmRUMemberPage extends Component
 				);
 			}
 		})
-		
-		const articleElements = this.props.mdata.experts.map(( expert ) => expert.display_name );
-		const experts = articleElements.length> 0 ? (
-			<li className="list-group-item">
-				<div className="row margin0">
-					<div className="col-md-12 critery_cell2">
-						<Voc text={"Experts, who put raiting:"} />
-					</div>
-					<div className="col-md-12 critery_cell2">
-						<strong>{ articleElements.join(", ") }</strong>
-					</div>
-				</div>
-			</li> )  : "";
 		const cardIcons = mdata.member.ganres.map((ganre, index) => 
 		{
 			return <FmRUGanreIcon ganre={ganre} key={ganre.id} />
@@ -171,6 +186,7 @@ export default class FmRUMemberPage extends Component
 	standart()
 	{
 		const {mdata, onItemClick} = this.props;
+		console.log( mdata, this.state.contents_id );
 		let contents = "";
 		switch(this.state.contents_id)
 		{
@@ -185,9 +201,8 @@ export default class FmRUMemberPage extends Component
 				break;
 				
 		}
-		return (
-		<Fragment>
-			{this.card()}
+		const switcher = this.props.mdata.is_diaries 
+			? 
 			<div className="btn-group" role="group" aria-label="Basic example">
 				<div 
 					className={["btn", this.state.contents_id === "0" ? "active" : "btn-link" ].join(" ")}
@@ -203,14 +218,20 @@ export default class FmRUMemberPage extends Component
 				>
 					<Voc text="Evaluations and appreciations"/>
 				</div>
-			</div>
+			</div> 
+			: 
+			null;
+		return (
+		<Fragment>
+			{this.card()}
+			{switcher}
 			{contents}
 		</Fragment>
 		);
 	}
 	edited()
 	{
-		const {mdata, onItemClick} = this.props;		
+		const {mdata, onItemClick} = this.props;
 		return (
 		<Fragment>
 			<FmRUCategoryBoxList 
@@ -218,14 +239,18 @@ export default class FmRUMemberPage extends Component
 				is_expert={mdata.is_expert} 
 				onItemClick={onItemClick}
 				member_id={mdata.member.id}
+				max_raiting={parseInt(mdata.max_raiting)}
 			/>	
-			<FmRUCriteryUniqList 
-				categories={mdata.categories}
-				data={mdata.uniqs}
-				member_id={mdata.member.id}
-				is_expert={mdata.is_expert} 
-				aut_criteries={mdata.aut_criteries} 
-			/>
+			{
+				mdata.is_experts_criteries == 1 ? <FmRUCriteryUniqList 
+					categories={mdata.categories}
+					data={mdata.uniqs}
+					member_id={mdata.member.id}
+					is_expert={mdata.is_expert} 
+					aut_criteries={mdata.aut_criteries} 
+					max_raiting={mdata.max_raiting} 
+				/> : null
+			}
 			<FmRUExpertDescrList 
 				data={mdata.expert_descr}
 				member_id={mdata.member.id}

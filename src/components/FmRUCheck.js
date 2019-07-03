@@ -27,7 +27,7 @@ export default class FmRUCheck extends Component
 					value={index}
 					className='radio srait'
 					defaultChecked={index === parseInt(this.state.val, 10)}
-					onChange={this.onItemClick.bind(this)}
+					onChange={ this.onItemClick }
 					data-fmru_type='fmru_player' 
 					data-args={id} 
 				/>
@@ -41,6 +41,7 @@ export default class FmRUCheck extends Component
 		this.setState({
 			val: oz
 		});
+		console.log({mid:member_id, crid:id, old_c:old, c:oz, d:"", is_comment:Foo.is_comment});
 		Foo.app.onOzenka("ozenka",{mid:member_id, crid:id, old_c:old, c:oz, d:"", is_comment:Foo.is_comment});
 	}
 }
