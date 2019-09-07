@@ -58,10 +58,11 @@ export default class FmRUHead extends Component
 					<div className="navbar-right">
 						
 						<FmRULoginForm 
-							prnt={this.props.prnt}
-							user = {this.props.p} 
-							onLogout={this.props.onLogout } 
-							onUser={this.props.onUser } 
+							prnt	= { this.props.prnt }
+							user 	= { this.props.p } 
+							onLogout= { this.props.onLogout } 
+							onSocial= { resp => console.log("onSocial") }
+							onUser	= { this.props.onUser } 
 						/>
 						<div className="fmRU_button light xl"
 							title={ Filters.props.text}							

@@ -37,7 +37,7 @@ Array.prototype.in_array = function(p_val)
 }
 ReactDOM.render( <Provider store={store}>
 		 <BrowserRouter>
-			<Route path="/" component={FmRUApp} />
+			<FmRUApp/>
 		 </BrowserRouter>
 	</Provider>, document.getElementById('main'));
 

@@ -1,0 +1,64 @@
+.fab.fa-leader-id
+{
+	background-image:url(LEADER_ID_logo.svg);
+	height: 22px;
+    width: 100%!important;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+.login-popup
+{
+	position:absolute;
+	z-index: 2;
+	top: 90px;
+	padding: 9px;
+    padding: 9px;
+    padding-right: 4px;
+    padding-bottom: 4px;	
+	right: -5px;
+	background-color:#999;
+	-webkit-transition: all 200ms ease-out;
+	-moz-transition: all 200ms ease-out;
+	-ms-transition: all 200ms ease-out;
+	-o-transition: all 200ms ease-out;
+	transition: all 200ms ease-out;
+	overflow:hidden;
+}
+.soc
+{
+	width:40px;
+	height:40px;
+	position:relative;
+	margin:0 5px 0 0;
+	display: inline-block;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	opacity:0.9;
+	cursor:pointer;
+}
+.vk.soc
+{
+	background-color:#4c75a3;
+	color:#FFF;	
+}
+.soc i,
+.soc .butn
+{
+	position:absolute;
+	top:50%;
+	font-size:16px;
+	margin-top:-8px;
+	text-align:center;
+	width:100%;	
+	--pointer-events:none;
+}
+.soc .butn
+{
+	margin-top:-14px;
+}
+.soc:hover
+{
+	opacity:1;
+	background-color:#666!important;
+}

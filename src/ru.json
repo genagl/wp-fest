@@ -1,4 +1,7 @@
 {
+	"Login with VK": "Войти через Вконтакт",
+	"Login with Google": "Войти через Google",
+	"Login with Facebook": "Войти через Facebook",
 	"Attantion": "Внимание",
 	"About": "О Фестивале",
 	"My projects": "Мои проекты",
@@ -150,6 +153,7 @@
 	"New post title": "Заголовок новой записи",
 	"Insert": "вставить",
 	"It/'s me": "Это я",
-	"It/'s me": "Это я",
+	"Last posts": "Последние сообщения",
+	"posts": "Сообщения",
 	"Experts, who put raiting:" : "Эксперты которые уже оценили"
 }

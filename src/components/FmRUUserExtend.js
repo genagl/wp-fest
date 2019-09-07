@@ -2,8 +2,6 @@ import React, {Component, Fragment} from 'react';
 import {PieChart, LineChart } from 'react-easy-chart'; //https://github.com/rma-consulting/react-easy-chart
 import _BarChart from './BarChart'
 import $ from "jquery";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 import Voc from './Voc';
 import Vocabulary from './Vocabulary';
@@ -374,6 +372,7 @@ export default class FmRUUserExtend extends Component
 					<div className="carousel-inner">
 						{con0}
 						{con1}
+						
 						{con3}					
 						<div className="carousel-item">
 							<section>
@@ -647,12 +646,12 @@ export default class FmRUUserExtend extends Component
 		const memberSelects = this.state.members.map((elem, index)=>{
 			return  evlbl_roles.in_array("Project_member")  ? 
 			<Fragment>
-				<div className="col-lg-2 col-md-4 col-sm-12 col-12 up_title">
+				<div className="col-lg-2 col-md-4 col-sm-12 up_title">
 					<Voc text={"Project Members"} />
 				</div>
-				<div className="col-lg-10 col-md-8 col-sm-12 col-12 ">		
+				<div className="col-lg-10 col-md-8 col-sm-12">		
 					<div className="row">
-						<div className="col-lg-6 col-md-12  col-sm-12 col-12" key={"newGnrPr__" +index}>				
+						<div className="col-md-12  col-sm-12" key={"newGnrPr__" +index}>				
 							<UserSelect 
 								users={data.users} 
 								onChoose={this.set_member} 
@@ -698,7 +697,7 @@ export default class FmRUUserExtend extends Component
 				<Voc text={"Team"}/>
 			</div>
 			<div className="spacer-10"/>
-			<div className='w-100'>				
+			<div className='row'>				
 				{TutorSelect}
 				
 				<div className="col-lg-2 col-md-4  col-sm-12 col-12 up_title">
@@ -1099,7 +1098,7 @@ export default class FmRUUserExtend extends Component
 			"update_my_project", //"test", 
 			data
 		);
-		$("#carouselExampleIndicators").carousel(0);
+		//$("#carouselExampleIndicators").carousel(0);
 		//$("#carouselExampleIndicators").carousel('dispose');
 	}
 	getUserName = evt => 

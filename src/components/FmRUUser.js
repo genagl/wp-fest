@@ -1,4 +1,5 @@
-import {Component} from 'react';
+import React, {Component} from 'react';
+import Vocabulary from './Vocabulary';
 
 export default class FmRUUser extends Component
 {	
@@ -78,6 +79,12 @@ export default class FmRUUser extends Component
 	render()
 	{
 		return "";
+	}
+	static rolesBlock()
+	{
+		return FmRUUser.instance.props.roles.map((e, i) => <div key={i} className="d-inline-block text-dark bg-half-transparent m-1 px-2 py-1 little">
+			{Vocabulary.getText(e)}
+		</div>);
 	}
 	static is_role( role )
 	{

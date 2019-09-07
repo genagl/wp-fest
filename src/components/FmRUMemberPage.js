@@ -18,9 +18,9 @@ export default class FmRUMemberPage extends Component
 	constructor(props)
 	{
 		super(props);
-		console.log( props );
+		window.scrollTo(0, 0);
 		this.state = {
-			contents_id : props.mdata.status != 2 ? "1" : props.mdata.member.slide_id,
+			contents_id : props.mdata.status != 2 || !props.mdata.is_diaries ? "1" : props.mdata.member.slide_id,
 			newPost : "",
 			newTitle : "",
 			new_post_private: false
@@ -86,12 +86,24 @@ export default class FmRUMemberPage extends Component
 				);
 			}
 		})
+		const raiting_vis = " list-group-item " + " hidden ";
 		const cardIcons = mdata.member.ganres.map((ganre, index) => 
 		{
 			return <FmRUGanreIcon ganre={ganre} key={ganre.id} />
 		});
-		const raiting_vis = " list-group-item " + " hidden ";
 		const ganres = mdata.member.ganres.map((ganre, index) =>  <span className='ganre_title' style={{backgroundColor: ganre.color}} key={"mg_"+ganre.id}>{ganre.name}</span> );
+		const my_ganres = this.props.mdata.is_ganres ?
+			<li className="list-group-item">
+				<div className="row margin0">
+					<div className="col-md-7 col-sm-7  critery_cell2">
+						<Voc text={'Ganres:'} />   
+						{ ganres }
+					</div>
+					<div className="col-md-5 col-sm-5 critery_cell2 lead">
+						{ cardIcons }
+					</div>
+				</div>
+			</li> : null;
 		return <Fragment>
 			<section id="card">
 				<div className="row">
@@ -127,17 +139,7 @@ export default class FmRUMemberPage extends Component
 								</div>
 								<div className="col-lg-7 col-md-6 col-sm-12" >
 									<ul className="list-group list-group-flush">
-										<li className="list-group-item">
-											<div className="row margin0">
-												<div className="col-md-7 col-sm-7  critery_cell2">
-													<Voc text={'Ganres:'} />   
-													{ ganres }
-												</div>
-												<div className="col-md-5 col-sm-5 critery_cell2 lead">
-													{ cardIcons }
-												</div>
-											</div>
-										</li>
+										{my_ganres}
 										<li className="list-group-item">
 											<div className="row margin0">
 												<div className="col-md-7 col-sm-7  critery_cell2">
@@ -262,7 +264,10 @@ export default class FmRUMemberPage extends Component
 	diary()
 	{
 		const {mdata} = this.props;
-		const te = mdata.owners.in_array(mdata.user_id ? mdata.user_id.toString() : -100) && ["1","2"].in_array(FmRUPhase.phase) ? 
+		const yes = mdata.owners.in_array(mdata.user_id ? mdata.user_id.toString() : -100) && [ 1, 2, "1", "2" ].in_array(FmRUPhase.phase);
+		console.log(mdata.owners.in_array(mdata.user_id ? mdata.user_id.toString() : -100), mdata.user_id);
+		console.log([ 1, 2, "1", "2" ].in_array(FmRUPhase.phase), FmRUPhase.phase);
+		const te = yes ? 
 			<div className="row">
 				<div className="col-12">
 					<div className="diary_post newpost" >

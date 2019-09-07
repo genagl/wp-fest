@@ -9,28 +9,28 @@ export default class FmRULoginWindow extends Component
 		this.state = {
 			log : "",
 			psw : "",
-			
+			remember:true
 		};
 	}
-	changeLogin(evt)
+	changeLogin = evt =>
 	{
 		var log = evt.currentTarget.value;
 		this.setState({
 			log : log,
 		});
 	}
-	changePsw(evt)
+	changePsw = evt =>
 	{
 		var psw = evt.currentTarget.value;
 		this.setState({
 			psw : psw,
 		});
 	}
-	onSet(evt)
+	onSet =evt =>
 	{
 		this.props.login(this.state);
-		if(window.loggedIn)
-			window.loggedIn(this.state);
+		//if(window.loggedIn)
+		//	window.loggedIn(this.state);
 	}
 	render()
 	{ 
@@ -61,7 +61,7 @@ export default class FmRULoginWindow extends Component
 										placeholder="Имя пользователя" 
 										size="20" 
 										value={this.state.log}
-										onChange={evt =>this.changeLogin(evt)}
+										onChange={ this.changeLogin }
 									/>
 								</div>
 							</div>
@@ -82,7 +82,7 @@ export default class FmRULoginWindow extends Component
 										size="20" 
 										
 										value={this.state.psw}
-										onChange={evt =>this.changePsw(evt)}
+										onChange={ this.changePsw }
 									/>
 								</div>							
 							</div>
@@ -92,7 +92,7 @@ export default class FmRULoginWindow extends Component
 								<div className="fmRU_button " 
 									id="user_login_btn"
 									data-dismiss='modal' 
-									onClick = {evt => this.onSet(evt)}
+									onClick = { this.onSet }
 								>
 									<i className="fa fa-caret-right"></i>
 								</div>

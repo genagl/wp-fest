@@ -55,7 +55,7 @@ export default class FmRURegisterWindow extends Component
 			showEmail:false
 		});
 	}
-	loginAuto= evt =>
+	loginAuto = evt =>
 	{
 		this.setState({
 			la : !this.state.la,
@@ -87,6 +87,10 @@ export default class FmRURegisterWindow extends Component
 		if(en) return;
 		this.props.register(this.state);
 		
+	}
+	responseVk = response =>
+	{
+		this.props.registrVK(response);
 	}
 	render()
 	{ 

@@ -124,7 +124,7 @@ export default class FmRUMemberBox extends Component
 	{
 		return(
 			<div className='col-xl-1_8 col-lg-2 col-md-3 col-sm-4 col-6' key={dat.id}>
-				<Link to={"fmru_member_" + dat.id}>
+				<Link to={"fmru_member/" + dat.id}>
 					<div className='member' data-class={dat.cl} data-mid={dat.id} data-fmru_type='fmru_player' data-args={dat.id} onClick={onItemClick}>
 						<img src={empty} className='ssfr' alt=""/>
 						<div className='member_title'>
