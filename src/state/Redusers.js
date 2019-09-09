@@ -69,7 +69,7 @@ function rootReducer(state=_state, action=_action)
 			//console.log(action);
 			_fetch( action.code, action.args, action.log, action.psw, action.data )
 				.then( data => {
-					console.log(data);
+					//console.log(data);
 					if(data.token)
 					{
 						setCookie("token", data.token, {expires:4 * 3600});
@@ -87,6 +87,7 @@ function rootReducer(state=_state, action=_action)
 			return state;
 	}
 }
-var store = get_status() !== "local" ? createStore(rootReducer, applyMiddleware(logger)) : createStore( rootReducer );
+console.log( get_status());
+var store = get_status() === "local" ? createStore(rootReducer, applyMiddleware(logger)) : createStore( rootReducer );
 //var store = createStore(rootReducer);
 export default store;

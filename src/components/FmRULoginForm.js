@@ -177,7 +177,7 @@ export default class FmRULoginForm extends Component
 							<img src={ icon3 } alt=''  style={style} />
 						</div>
 					</div>
-					{soc2}
+					{/*soc2*/}
 					{register}
 				</Fragment>
 			);

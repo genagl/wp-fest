@@ -728,7 +728,7 @@ class FmRUApp extends Component
 	}
 	on_fetch( code, args, log, psw )
 	{
-		console.log( code, args, log, psw );
+		//console.log( code, args, log, psw );
 		//this.loader.current.style.opacity = 1;
 		window.is_loader=1;
 		code = !code ? "page" : code;
