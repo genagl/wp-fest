@@ -18,7 +18,7 @@
     "react-chartjs2": "^1.2.1",
     "react-codemirror": "^1.0.0",
     "react-dom": "^16.4.0",
-    "react-draft-wysiwyg": "^1.12.13",
+    "react-draft-wysiwyg": "^1.14.6",
     "react-easy-chart": "^1.0.0",
     "react-fluid-svg": "0.0.7",
     "react-redux": "^5.0.7",
